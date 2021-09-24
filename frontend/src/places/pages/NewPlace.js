@@ -1,46 +1,27 @@
-import React, { useCallback, useReducer } from "react";
+import React from "react";
 
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
-import './NewPlace.css'
+import { useForm } from "../../shared/hooks/form-hook";
+import './PlaceForm.css'
 
-const formReducer = (state, action) => {
-    switch (action.type) {
-        case 'INPUT_CHANGE':
-            return {
-                ...state,
-                inputs: {
-                    ...state.inputs,
-                    [action.inputId]:  {value: action.value} 
-                }
-            }
-            default:
-                return state;
-    }
-}
+
 
 const NewPlace = () => {
-   const [formState, dispatch] = useReducer(formReducer, {
-       inputs: {
-        //    title: {
-        //        value: '',
-        //    },
-        //    discription: {
-        //        value: '',
-        //    },
-        //    address: {
-        //        value:''
-        //    }
-       }
-   });
+    const [formState, inputHandler] = useForm(
+    {
+        title: {
+            value: '',
+        },
+        description: {
+            value: '',
+        },
+        address: {
+            value: '',
+        }
+    });
 
-   const inputHandler = useCallback((id, value) => {
-       dispatch({
-           type: 'INPUT_CHANGE',
-           value: value,
-           inputId: id
-       });
-   }, []);
+
 
    const placeSubmitHandler = (event) => {
        event.preventDefault();
